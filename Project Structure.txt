@@ -1,0 +1,11 @@
+waste-mapping-project/
+│
+├── index.html
+├── styles.css
+├── data.js
+├── app.js
+├── report.pdf
+└── screenshots/
+    ├── map-overview.png
+    ├── legal-sites.png
+    └── illegal-sites.png

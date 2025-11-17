@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masaka Waste Management Map - Community Environmental Health</title>
+     
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="styles.css">
+    <!-- Leaflet Routing Machine CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-recycle"></i>
+                <div class="logo-text">
+                    <h1>Masaka Waste Management</h1>
+                    <p class="tagline">Community Environmental Health Initiative</p>
+                </div>
+            </div>
+            <div class="header-info">
+                <span class="community-tag">
+                    <i class="fas fa-seedling"></i>
+                    Promoting Clean & Healthy Communities
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Side Panel -->
+    <div class="side-panel">
+        <div class="panel-section">
+            <h2><i class="fas fa-filter"></i> Filter Waste Sites</h2>
+            <div class="filter-controls">
+                <button class="filter-btn active" data-filter="all">
+                    <i class="fas fa-layer-group"></i>
+                    Show All Sites
+                </button>
+                <button class="filter-btn" data-filter="legal">
+                    <i class="fas fa-trash-alt"></i>
+                    Legal Collection Points
+                </button>
+                <button class="filter-btn" data-filter="illegal">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    Illegal Dumping Sites
+                </button>
+                <button class="filter-btn" data-filter="community">
+                    <i class="fas fa-users"></i>
+                    Community Centers
+                </button>
+            </div>
+        </div>
+
+        <div class="panel-section">
+            <h2><i class="fas fa-info-circle"></i> Map Legend</h2>
+            <div class="legend">
+                <div class="legend-item">
+                    <span class="legend-color legal"></span>
+                    <div class="legend-text">
+                        <strong>Legal Collection</strong>
+                        <span>Official waste disposal sites</span>
+                    </div>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-color illegal"></span>
+                    <div class="legend-text">
+                        <strong>Illegal Dumping</strong>
+                        <span>Reported dumping areas</span>
+                    </div>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-color community"></span>
+                    <div class="legend-text">
+                        <strong>Community Centers</strong>
+                        <span>Support and education centers</span>
+                    </div>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-color" style="background: #2196F3;"></span>
+                    <div class="legend-text">
+                        <strong>Your Location</strong>
+                        <span>Current position</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-section">
+            <h2><i class="fas fa-chart-bar"></i> Waste Management Stats</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon legal">
+                        <i class="fas fa-trash-alt"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-number" id="legal-count">0</span>
+                        <span class="stat-label">Legal Sites</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon illegal">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-number" id="illegal-count">0</span>
+                        <span class="stat-label">Illegal Sites</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon community">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-number" id="community-count">0</span>
+                        <span class="stat-label">Community Centers</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon total">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-number" id="total-count">0</span>
+                        <span class="stat-label">Total Points</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-section">
+            <h2><i class="fas fa-bullseye"></i> Environmental Impact</h2>
+            <div class="impact-info">
+                <p>This map helps identify waste management challenges and opportunities for improvement in Masaka municipality.</p>
+                <div class="impact-stats">
+                    <div class="impact-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Public Health Protection</span>
+                    </div>
+                    <div class="impact-item">
+                        <i class="fas fa-tint"></i>
+                        <span>Water Source Safety</span>
+                    </div>
+                    <div class="impact-item">
+                        <i class="fas fa-tree"></i>
+                        <span>Environmental Cleanup</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-section">
+            <h2><i class="fas fa-lightbulb"></i> Quick Actions</h2>
+            <div class="action-buttons">
+                <!-- ADD THESE TWO BUTTONS FOR ROUTING -->
+                <button class="action-btn location-btn">
+                    <i class="fas fa-location-arrow"></i>
+                    Find My Location
+                </button>
+                <button class="action-btn clear-route-btn">
+                    <i class="fas fa-times"></i>
+                    Clear Route
+                </button>
+                <button class="action-btn report-btn">
+                    <i class="fas fa-flag"></i>
+                    Report Illegal Dumping
+                </button>
+                <button class="action-btn info-btn">
+                    <i class="fas fa-info"></i>
+                    Recycling Guidelines
+                </button>
+            </div>
+        </div>
+
+        <!-- ADD THIS NEW SECTION FOR ROUTING INSTRUCTIONS -->
+        <div class="panel-section route-instructions-panel">
+            <h2><i class="fas fa-route"></i> Route Directions</h2>
+            <div id="route-instructions">
+                <p class="route-placeholder">Get directions by clicking "Find My Location" and then clicking on any legal waste site.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Map Container -->
+    <div class="map-container">
+        <div id="map"></div>
+    </div>
+     
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-info">
+                <span>Masaka Municipal Council &copy; 2025</span>
+                <span class="divider">|</span>
+                <span>Waste Management Department</span>
+                <span class="divider">|</span>
+                <span>Environmental Health Initiative</span>
+            </div>
+            <div class="footer-links">
+                <button class="footer-btn" id="about-btn">
+                    <i class="fas fa-info"></i> About
+                </button>
+                <button class="footer-btn" id="help-btn">
+                    <i class="fas fa-question-circle"></i> Help
+                </button>
+                <button class="footer-btn" id="contact-btn">
+                    <i class="fas fa-phone"></i> Contact
+                </button>
+            </div>
+        </div>
+    </footer>
+    
+        
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
